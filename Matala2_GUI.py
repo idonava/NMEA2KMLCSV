@@ -10,7 +10,7 @@ import sys
 import M1 as m
 import nmea_to_csv as c
 import nema_to_kml_3 as kml
-
+import datetime
 from PyQt4.QtGui import QFileDialog
 
 try:
@@ -327,13 +327,14 @@ class Ui_NMEA(QtGui.QWidget):
         fileText = self.fileText.toPlainText()
         outputText = self.folderText.toPlainText()
         arr = self.checkValues()
-        timeS = self.dateStart.text()[0:8].replace(':','')
-        dateS = self.dateStart.text()[9:19].replace('/','')
-        dateS = dateS[:4]+dateS[-2:]
-
-        timeE = self.dateEnd.text()[0:8].replace(':', '')
-        dateE = self.dateEnd.text()[9:19].replace('/', '')
-        dateE = dateE[:4] + dateE[-2:]
+        timeS = self.dateStart.text()[0:8]
+        dateS = self.dateStart.text()[9:19]
+        timeE = self.dateEnd.text()[0:8]
+        dateE = self.dateEnd.text()[9:19]
+        dateS =datetime.date(int(dateS[-4:]), int(dateS[3:5]),int(dateS[0:2]))
+        dateE =datetime.date(int(dateE[-4:]), int(dateE[3:5]),int(dateE[0:2]))
+        timeS= datetime.time(int(timeS[0:2]),int(timeS[3:5]),int(timeS[-2:]))
+        timeE= datetime.time(int(timeE[0:2]),int(timeE[3:5]),int(timeE[-2:]))
         #filter=[date start, date end,time start, time end, altitude start, altitude end, speed start, speed end, nos start, nos end]
         filter=[dateS,dateE,timeS,timeE,self.altStart.text(),self.altEnd.text(),self.speedStart.text(),self.speedEnd.text(), self.nosStart.text(),self.nosEnd.text()]
 
