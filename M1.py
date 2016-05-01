@@ -5,6 +5,7 @@ import sqlite3
 
 # Create table
 total=0
+dates=[]
 def read_dir(str):
     i=0
     global total
