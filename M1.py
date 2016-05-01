@@ -105,6 +105,9 @@ def checkFilterLine(line,filter):
                 return 0
         #Checking speed
         if not float(filter[6])<=knots_to_kph(line[10])<= float(filter[7]):
+            print "filter[6] = ",float(filter[6])
+            print "line = ", knots_to_kph(line[10])
+            print "filter[6] = ", float(filter[6])
             return 0
         #Checking NOS
         if not int(filter[8])<=int(line[6])<=int(filter[9]):
@@ -112,7 +115,7 @@ def checkFilterLine(line,filter):
         return 1
 
 def knots_to_kph(value):
-    return "%.2f" % (float(value) * 1.85200)
+    return  (float(value) * 1.85200)
 
 def dropAll():
     conn = sqlite3.connect('example.db')
