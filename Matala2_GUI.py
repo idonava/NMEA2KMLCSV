@@ -337,9 +337,9 @@ class Ui_NMEA(QtGui.QWidget):
 
             m.read_file(fileText,0)
             if self.box_csv.isChecked():
-                    c.create_csv(0, outputText,arr)
+                    c.create_csv(0, outputText,arr,filter)
             if self.box_kml.isChecked():
-                    kml.create_kml(0, outputText,arr)
+                    kml.create_kml(0, outputText,arr,filter)
             print("2")
         else:
             i=  m.read_dir(fileText)
