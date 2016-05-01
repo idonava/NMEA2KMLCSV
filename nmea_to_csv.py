@@ -12,13 +12,10 @@ def create_csv(i,output,arr,filter):
         writer = csv.writer(f)
         writer.writerow(['time', 'latitude', 'north\south','longtitude','east\west','quality','nos','hdop','altitude','hog','speed','date'])
         for row in data:
-            print(m.checkFilterLine(row, filter))
             if (m.checkFilterLine(row,filter)==1):
                 writer.writerow(row)
                 counter=counter+1
-        print ("Counter =",counter)
     if not counter==0:
-        print("I did it")
         with open("temp","rb") as source:
             rdr= csv.reader( source )
             with open(name,"wb") as result:
