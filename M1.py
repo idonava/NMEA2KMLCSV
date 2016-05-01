@@ -98,7 +98,7 @@ def checkFilterLine(line,filter):
         # Checking end time
         if filter[1] == dateLine:
             timeLine = datetime.time(int(line[0][0:2]), int(line[0][2:4]), int(line[0][4:6]))
-            if not timeLine >= filter[3]:
+            if not timeLine <= filter[3]:
                 return 0
         #Checking altitude
         if not float(filter[4]) <= float(line[8])<=float(filter[5]):

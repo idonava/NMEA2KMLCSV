@@ -4,6 +4,7 @@
 import os.path
 import sqlite3
 import time
+import M1 as m
 
 def format_time(value):
     hour = value[:2]
@@ -37,36 +38,37 @@ def create_kml(i,output,arr,filter):
     j=0
     for poi in pois:
         if j%skip==0:
-            FILE.write('<Placemark>\n')
-            FILE.write('    <TimeStamp>\n')
-            FILE.write('     <when>%sT%s</when>\n' % (format_date(poi[11]),format_time(poi[0])))
-            FILE.write('    </TimeStamp>\n')
-            lat = float(poi[1][:2]) + (float(poi[1][2:]) / 60)
-            lon = float(poi[3][:3]) + (float(poi[3][3:]) / 60)
-            FILE.write('    <description><![CDATA[' )
-            if(arr[10]==1):
-                FILE.write('Date: %s <br>' % format_date(poi[11]))
-            if (arr[0] == 1):
-                FILE.write('Time: %s <br>' % format_time(poi[0]))
-            if(arr[1]==1):
-                FILE.write('Latitude: %s %s <br>' % (str(lat),poi[4]))
-            if(arr[3]==1):
-                FILE.write('Longtitude: %s %s <br>' % (str(lon),poi[2]))
-            if (arr[8]==1):
-                FILE.write('Altitude: %s <br>' % poi[8])
-            if (arr[9]==1):
-                FILE.write('Speed: %s <br>' % knots_to_kph(poi[10]))
-            if(arr[5]==1):
-                FILE.write('Quality: %s <br>' % poi[5])
-            if (arr[6] == 1):
-                FILE.write('Number of Satellites: %s <br>' % poi[6])
-            FILE.write(']]></description>\n')
-            FILE.write('    <Point>\n')
+            if (m.checkFilterLine(poi,filter)==1):
+                FILE.write('<Placemark>\n')
+                FILE.write('    <TimeStamp>\n')
+                FILE.write('     <when>%sT%s</when>\n' % (format_date(poi[11]),format_time(poi[0])))
+                FILE.write('    </TimeStamp>\n')
+                lat = float(poi[1][:2]) + (float(poi[1][2:]) / 60)
+                lon = float(poi[3][:3]) + (float(poi[3][3:]) / 60)
+                FILE.write('    <description><![CDATA[' )
+                if(arr[10]==1):
+                    FILE.write('Date: %s <br>' % format_date(poi[11]))
+                if (arr[0] == 1):
+                    FILE.write('Time: %s <br>' % format_time(poi[0]))
+                if(arr[1]==1):
+                    FILE.write('Latitude: %s %s <br>' % (str(lat),poi[4]))
+                if(arr[3]==1):
+                    FILE.write('Longtitude: %s %s <br>' % (str(lon),poi[2]))
+                if (arr[8]==1):
+                    FILE.write('Altitude: %s <br>' % poi[8])
+                if (arr[9]==1):
+                    FILE.write('Speed: %s <br>' % knots_to_kph(poi[10]))
+                if(arr[5]==1):
+                    FILE.write('Quality: %s <br>' % poi[5])
+                if (arr[6] == 1):
+                    FILE.write('Number of Satellites: %s <br>' % poi[6])
+                FILE.write(']]></description>\n')
+                FILE.write('    <Point>\n')
 
-            FILE.write('        <coordinates>%sZ,%sZ,%s</coordinates>\n' % (str(lon), str(lat), poi[8]))
-            FILE.write('    </Point>\n')
-            FILE.write('</Placemark>\n')
-            j=j+1
+                FILE.write('        <coordinates>%sZ,%sZ,%s</coordinates>\n' % (str(lon), str(lat), poi[8]))
+                FILE.write('    </Point>\n')
+                FILE.write('</Placemark>\n')
+                j=j+1
         else:
             j=j+1
     FILE.write('        </Folder>\n')
