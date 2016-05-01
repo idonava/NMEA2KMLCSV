@@ -20,7 +20,7 @@ def format_date(value):
 def knots_to_kph(value):
     return   str("%.2f" %(float(value)*1.85200)) +" km/h"
 
-def create_kml(i,output,arr):
+def create_kml(i,output,arr,filter):
     my_category = 0
     skip=5
     database = sqlite3.connect('example.db')

@@ -1,7 +1,7 @@
 import csv
 import sqlite3
 
-def create_csv(i,output,arr):
+def create_csv(i,output,arr,filter):
     conn = sqlite3.connect('example.db')
     conn.text_factory = str
     cur = conn.cursor()

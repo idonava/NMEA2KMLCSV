@@ -304,8 +304,6 @@ class Ui_NMEA(QtGui.QWidget):
 
     def checkValues(self):
         arr=[0,0,0,0,0,0,0,0,0,0,0]
-        #filter=[Date and time start, Date and time end, altitude start, altitude end, speed start, speed end, nos start, nos end]
-        filter=[self.dateStart.text(),self.dateEnd.text(),self.altStart.text(),self.altEnd.text(),self.speedStart.text(),self.speedEnd.text(), self.nosStart.text(),self.nosEnd.text()]
 
         if (self.box_time.isChecked()):
             arr[0] = 1
@@ -329,6 +327,9 @@ class Ui_NMEA(QtGui.QWidget):
         fileText = self.fileText.toPlainText()
         outputText = self.folderText.toPlainText()
         arr = self.checkValues()
+        #filter=[Date and time start, Date and time end, altitude start, altitude end, speed start, speed end, nos start, nos end]
+        filter=[self.dateStart.text(),self.dateEnd.text(),self.altStart.text(),self.altEnd.text(),self.speedStart.text(),self.speedEnd.text(), self.nosStart.text(),self.nosEnd.text()]
+
         if (fileText==''):
             self.folderText.setText("Pleasse select a vaild path")
             print("1")
@@ -344,10 +345,10 @@ class Ui_NMEA(QtGui.QWidget):
             i=  m.read_dir(fileText)
             if self.box_csv.isChecked():
                 for x in range(1, i + 1):
-                     c.create_csv(x,outputText,arr)
+                     c.create_csv(x,outputText,arr,filter)
             if self.box_kml.isChecked():
                 for x in range(1, i + 1):
-                    kml.create_kml(x,outputText,arr)
+                    kml.create_kml(x,outputText,arr,filter)
             print("3")
 
 
