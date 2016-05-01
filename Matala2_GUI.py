@@ -323,6 +323,7 @@ class Ui_NMEA(QtGui.QWidget):
             arr[6]=1
         return arr
 
+
     def convert(self):
         self.pushButton_3.setEnabled(False)
         self.pushButton_3.setText("Working")
