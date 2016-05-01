@@ -281,7 +281,12 @@ class Ui_NMEA(QtGui.QWidget):
         self.label_15.setText(_translate("NMEA", "_", None))
         self.label_16.setText(_translate("NMEA", "Speed (km/h):", None))
         self.label_18.setText(_translate("NMEA", "_", None))
-
+        self.pushButton_3.clicked.connect(self.convert)
+        self.openFolder.clicked.connect(self.openFolderDialog)
+        self.openOutput.clicked.connect(self.selectOutputFolder)
+        self.openFile.clicked.connect(self.openFileDialog)
+        self.folderText.setText('C:\\')
+        self.fileText.setText('C:\\')
     def printd(self):
         print("ido")
 
@@ -299,6 +304,9 @@ class Ui_NMEA(QtGui.QWidget):
 
     def checkValues(self):
         arr=[0,0,0,0,0,0,0,0,0,0,0]
+        #filter=[Date and time start, Date and time end, altitude start, altitude end, speed start, speed end, nos start, nos end]
+        filter=[self.dateStart.text(),self.dateEnd.text(),self.altStart.text(),self.altEnd.text(),self.speedStart.text(),self.speedEnd.text(), self.nosStart.text(),self.nosEnd.text()]
+
         if (self.box_time.isChecked()):
             arr[0] = 1
         if (self.box_date.isChecked()):
