@@ -327,8 +327,15 @@ class Ui_NMEA(QtGui.QWidget):
         fileText = self.fileText.toPlainText()
         outputText = self.folderText.toPlainText()
         arr = self.checkValues()
-        #filter=[Date and time start, Date and time end, altitude start, altitude end, speed start, speed end, nos start, nos end]
-        filter=[self.dateStart.text(),self.dateEnd.text(),self.altStart.text(),self.altEnd.text(),self.speedStart.text(),self.speedEnd.text(), self.nosStart.text(),self.nosEnd.text()]
+        timeS = self.dateStart.text()[0:8].replace(':','')
+        dateS = self.dateStart.text()[9:19].replace('/','')
+        dateS = dateS[:4]+dateS[-2:]
+
+        timeE = self.dateEnd.text()[0:8].replace(':', '')
+        dateE = self.dateEnd.text()[9:19].replace('/', '')
+        dateE = dateE[:4] + dateE[-2:]
+        #filter=[date start, date end,time start, time end, altitude start, altitude end, speed start, speed end, nos start, nos end]
+        filter=[dateS,dateE,timeS,timeE,self.altStart.text(),self.altEnd.text(),self.speedStart.text(),self.speedEnd.text(), self.nosStart.text(),self.nosEnd.text()]
 
         if (fileText==''):
             self.folderText.setText("Pleasse select a vaild path")

@@ -37,7 +37,6 @@ def create_kml(i,output,arr,filter):
     j=0
     for poi in pois:
         if j%skip==0:
-            print('%s : %s, %s' % (poi, poi[2], poi[1],))
             FILE.write('<Placemark>\n')
             FILE.write('    <TimeStamp>\n')
             FILE.write('     <when>%sT%s</when>\n' % (format_date(poi[11]),format_time(poi[0])))
