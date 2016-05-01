@@ -324,6 +324,9 @@ class Ui_NMEA(QtGui.QWidget):
         return arr
 
     def convert(self):
+        self.pushButton_3.setEnabled(False)
+        self.pushButton_3.setText("Working")
+        QtGui.QApplication(sys.argv).processEvents()
         fileText = self.fileText.toPlainText()
         outputText = self.folderText.toPlainText()
         arr = self.checkValues()
@@ -358,8 +361,9 @@ class Ui_NMEA(QtGui.QWidget):
                 for x in range(1, i + 1):
                     kml.create_kml(x,outputText,arr,filter)
             print("3")
-
-
+        self.pushButton_3.setEnabled(True)
+        self.pushButton_3.setText("Convert")
+        QtGui.QApplication(sys.argv).processEvents()
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     ex = Ui_NMEA()
