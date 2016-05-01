@@ -1,6 +1,6 @@
 import os.path
 import sqlite3
-
+import datetime
 
 
 # Create table
@@ -85,6 +85,34 @@ def load_DB(str1,str2,i):
     conn.commit()
     conn.close()
 
+def checkFilterLine(line,filter):
+        dateLine = datetime.date(int("20"+line[11][-2:]), int(line[11][2:4]), int(line[11][0:2]))
+        #Checking date
+        if not(filter[0]<=dateLine<=filter[1]):
+            return 0
+        #Checking start time
+        if filter[0]==dateLine:
+            timeLine = datetime.time(int(line[0][0:2]),int(line[0][2:4]),int(line[0][4:6]))
+            if not timeLine>=filter[2]:
+                return 0
+        # Checking end time
+        if filter[1] == dateLine:
+            timeLine = datetime.time(int(line[0][0:2]), int(line[0][2:4]), int(line[0][4:6]))
+            if not timeLine >= filter[3]:
+                return 0
+        #Checking altitude
+        if not float(filter[4]) <= float(line[8])<=float(filter[5]):
+                return 0
+        #Checking speed
+        if not float(filter[6])<=knots_to_kph(line[10])<= float(filter[7]):
+            return 0
+        #Checking NOS
+        if not int(filter[8])<=int(line[6])<=int(filter[9]):
+            return 0
+        return 1
+
+def knots_to_kph(value):
+    return "%.2f" % (float(value) * 1.85200)
 
 def dropAll():
     conn = sqlite3.connect('example.db')
