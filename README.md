@@ -1,10 +1,19 @@
-# matala2_python27
+
+# Matala 2 GitHub Libary:
+
+
+Root - Python Codes.
+
+Root/Docs - Documentation and diagrams.
+
+Root/Nmea files - nmea files.
+
+
+# Instructions to run the application:
 
 Python version: 2.7 
 
 External libraries: PyQT4
-
-Instructions to run the application:
 
 1.  a. Make sure your main python version is 2.7.
 
