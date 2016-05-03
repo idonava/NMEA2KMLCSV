@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ido2.ui'
-#
-# Created by: PyQt4 UI code generator 4.11.4
-#
-# WARNING! All changes made in this file will be lost!
+# Matala 2 GUI
+
 from PyQt4 import QtCore, QtGui
 import sys
 import M1 as m
@@ -287,9 +283,6 @@ class Ui_NMEA(QtGui.QWidget):
         self.openFile.clicked.connect(self.openFileDialog)
         self.folderText.setText('C:\\')
         self.fileText.setText('C:\\')
-    def printd(self):
-        print("ido")
-
     def openFileDialog(self):
         filter = "Nmea(*.nmea)"
         filename = QtGui.QFileDialog.getOpenFileNameAndFilter(self,"Open File", "C:\\nmea",filter)
@@ -301,7 +294,7 @@ class Ui_NMEA(QtGui.QWidget):
     def selectOutputFolder(self):
         foldername = QtGui.QFileDialog.getExistingDirectory(self, 'Select a folder:', 'C:\\', QtGui.QFileDialog.ShowDirsOnly)
         self.folderText.setText(foldername)
-
+    #checkValues - Check the user preferences by clicking on the checkboxs
     def checkValues(self):
         arr=[0,0,0,0,0,0,0,0,0,0,0]
 
@@ -323,9 +316,11 @@ class Ui_NMEA(QtGui.QWidget):
             arr[6]=1
         return arr
 
-
+    #convert function - create the files on button convert click
     def convert(self):
-        self.Working()
+        self.pushButton_3.setEnabled(False)
+        self.pushButton_3.setText("Working")
+        QtGui.QApplication.processEvents()
         fileText = self.fileText.toPlainText()
         outputText = self.folderText.toPlainText()
         arr = self.checkValues()
@@ -360,12 +355,6 @@ class Ui_NMEA(QtGui.QWidget):
                 for x in range(1, i + 1):
                     kml.create_kml(x,outputText,arr,filter)
             print("3")
-        self.finish()
-    def Working(self):
-        self.pushButton_3.setEnabled(False)
-        self.pushButton_3.setText("Working")
-        QtGui.QApplication.processEvents()
-    def finish(self):
         self.pushButton_3.setEnabled(True)
         self.pushButton_3.setText("Convert")
         QtGui.QApplication.processEvents()

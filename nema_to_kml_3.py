@@ -1,26 +1,31 @@
-# !/usr/bin/python
-# -*- coding: UTF-8 -*-
+# nmea to kml class
 
 import os.path
 import sqlite3
 import time
 import M1 as m
 
+#format_time function - return the time different format.
 def format_time(value):
     hour = value[:2]
     minute = value[2:4]
     second = value[4:6]
     timeval = hour + ":" + minute + ":" + second
     return timeval
+
+#format_date function - return the date different format
 def format_date(value):
     day = value[:2]
     month = value[2:4]
     year = value[4:6]
     dateval = "20"+year+"-"+month+"-"+day
     return dateval
+
+#knots_to_kph function - convert speed in knots to kmh
 def knots_to_kph(value):
     return   str("%.2f" %(float(value)*1.85200)) +" km/h"
 
+#create_kml function - create the kml file
 def create_kml(i,output,arr,filter):
     my_category = 0
     skip=5
@@ -46,6 +51,7 @@ def create_kml(i,output,arr,filter):
                 lat = float(poi[1][:2]) + (float(poi[1][2:]) / 60)
                 lon = float(poi[3][:3]) + (float(poi[3][3:]) / 60)
                 FILE.write('    <description><![CDATA[' )
+                # Checking the user preferences to filter
                 if(arr[10]==1):
                     FILE.write('Date: %s <br>' % format_date(poi[11]))
                 if (arr[0] == 1):
@@ -76,6 +82,3 @@ def create_kml(i,output,arr,filter):
     FILE.write('</kml>\n')
     FILE.close()
     database.close()
-
-
-#	db_call = "INSERT INTO poi (idmd5, lat, lon, visibility, cat, subcat, keywords, desc, price_range, extended_open) VALUES (?,?,?,?,?,?,?,?,?,?) "

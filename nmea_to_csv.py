@@ -1,6 +1,8 @@
 import csv
 import sqlite3
 import M1 as m
+
+#create_csv function - create the csv file
 def create_csv(i,output,arr,filter):
     counter=0
     conn = sqlite3.connect('example.db')
@@ -21,6 +23,7 @@ def create_csv(i,output,arr,filter):
             with open(name,"wb") as result:
                 wtr= csv.writer( result )
                 for r in rdr:
+                    #Checking the user preferences to filter
                     if (arr[10] == 0):
                         del r[11]
                     if (arr[9] == 0):

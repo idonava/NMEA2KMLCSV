@@ -2,10 +2,12 @@ import os.path
 import sqlite3
 import datetime
 
+# Matala 2 Algorithm
 
-# Create table
 total=0
 dates=[]
+
+#Reading nmea files from a folder
 def read_dir(str):
     i=0
     global total
@@ -17,10 +19,13 @@ def read_dir(str):
                total = i
     return i
 
+#Reading single nmea file
 def read_file(str1,i):
     with open (str1,'r')as f:
+        #Creating Database
         conn = sqlite3.connect('example.db')
         c = conn.cursor()
+        #Checking if the database already exist
         c.execute('drop table if exists nmea' + str(i))
         c.execute('CREATE TABLE IF NOT EXISTS summary(startDate text,endDate text,startTime text, endTime text,maxSpeed text,minSpeed text)')
         c.execute('''CREATE TABLE nmea''' + str(i) + '''
@@ -56,7 +61,7 @@ def checkLine(line):                         # checkLine Function - Fix the line
         line1 = line[j:]
         return line1
     return line
-def find_GA(list,index):
+def find_GA(list,index):                    #Finding the next GPGGA line
     while "GPGGA" not in list[index] and index<len(list)-2:
         index=index+1
     if index >= len(list) - 1:
@@ -66,7 +71,7 @@ def find_GA(list,index):
         return find_GA(list,index+1)
 
     return index
-def findMC(list,index):
+def findMC(list,index):                     #Finding the next GPRMC line
     while "GPRMC" not in list[index] and index<len(list)-2:
         index=index+1
     if index>=len(list)-1:
@@ -75,7 +80,7 @@ def findMC(list,index):
     if (str[1]==''):
         return find_GA(list,index+1)
     return index
-def load_DB(str1,str2,i):
+def load_DB(str1,str2,i):                   #Enter the lines into the database
     list1=str1.split(",")
     list2=str2.split(",")
     conn = sqlite3.connect('example.db')
@@ -85,7 +90,7 @@ def load_DB(str1,str2,i):
     conn.commit()
     conn.close()
 
-def checkFilterLine(line,filter):
+def checkFilterLine(line,filter):           #Checking if the lines are proper, if not - fix it.
         dateLine = datetime.date(int("20"+line[11][-2:]), int(line[11][2:4]), int(line[11][0:2]))
         #Checking date
         if not(filter[0]<=dateLine<=filter[1]):
@@ -114,7 +119,7 @@ def checkFilterLine(line,filter):
             return 0
         return 1
 
-def knots_to_kph(value):
+def knots_to_kph(value):                #Function that convert speed in knots to kmh
     return  (float(value) * 1.85200)
 
 def dropAll():
